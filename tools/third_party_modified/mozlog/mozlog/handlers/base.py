@@ -19,6 +19,9 @@ class BaseHandler:
         if hasattr(inner, "message_handler"):
             self.message_handler.wrapped.append(inner.message_handler)
 
+    def close(self):
+        pass
+
 
 class LogLevelFilter(BaseHandler):
     """Handler that filters out messages with action of log and a level
@@ -99,3 +102,6 @@ class StreamHandler(BaseHandler):
                 return
 
             self.stream.flush()
+
+    def close(self):
+        self.stream.close()

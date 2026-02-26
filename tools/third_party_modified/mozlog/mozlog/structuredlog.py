@@ -179,6 +179,12 @@ class LoggerState:
         self.reset()
 
     def reset(self):
+        if hasattr(self, "handlers"):
+            for handler in self.handlers:
+                try:
+                    handler.close()
+                except AttributeError:
+                    pass
         self.handlers = []
         self.subsuites = set()
         self.running_tests = set()
